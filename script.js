@@ -15,9 +15,26 @@ generateBtn.addEventListener("click", writePassword);
 
 // Generate password 
 function generatePassword() {
-  var userSelection = promptUser()
-  console.log (userSelection);
-  return '123';
+  var lowerCaseArray = "abcdefghijklmnopqrstuvwxyz".split("");
+  var upperCaseArray = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+  var numericArray = "1234567890".split("");
+  var specialCharArray = "!@#$%^&*()_+|\?[]{}".split("");
+
+  var userSelection = promptUser();
+
+  var passwd = "";
+  //console.log (userSelection.passwordLenghtNum);
+  //console.log (passwd.length);
+  while (passwd.length < userSelection.passwordLenghtNum) {
+   passwd = passwd + (userSelection.isLowerCase?lowerCaseArray[Math.floor(Math.random()*lowerCaseArray.length)]:"")
+   passwd = passwd + (userSelection.isUpperCase?upperCaseArray[Math.floor(Math.random()*upperCaseArray.length)]:"")
+   passwd = passwd + (userSelection.isNumeric?numericArray[Math.floor(Math.random()*numericArray.length)]:"")
+   passwd = passwd + (userSelection.isSpecialChar?specialCharArray[Math.floor(Math.random()*specialCharArray.length)]:"")
+
+  }
+  
+  
+  return passwd.substr(0, userSelection.passwordLenghtNum);
 
 }
 
@@ -26,6 +43,8 @@ function promptUser() {
   
   var passwordLenghtStr = prompt ("Please provide password lenght 8 - 128", "10");
   var passwordLenghtNum = parseInt (passwordLenghtStr);
+  passwordLenghtNum = passwordLenghtNum < 8 ? 8 : passwordLenghtNum;
+  passwordLenghtNum = passwordLenghtNum > 128 ? 128 : passwordLenghtNum;
 
   var lowerCaseStr = prompt ("Would you like a lowercase letter? y/n", "y");
   var isLowerCase = lowerCaseStr === "y" || lowerCaseStr === "Y";
